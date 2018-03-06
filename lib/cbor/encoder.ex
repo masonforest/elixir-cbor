@@ -7,6 +7,8 @@ defmodule Cbor.Encoder do
           concat(Types.unsigned_integer, encode_unsigned_int(value))
         value when is_atom(value) ->
           concat(Types.string, encode_string(value))
+        value when is_binary(value) ->
+          concat(Types.byte_string, encode_byte_string(value))
         value when is_list(value) ->
           concat(Types.array, encode_array(value))
         value when is_map(value) ->
@@ -16,6 +18,12 @@ defmodule Cbor.Encoder do
 
   def concat(left, right) do
     <<left::bitstring, right::bitstring>>
+  end
+
+  def encode_byte_string(value) do
+    length = encode_unsigned_int(byte_size(value))
+
+    concat(length, value)
   end
 
   def encode_array(value) do
@@ -30,16 +38,10 @@ defmodule Cbor.Encoder do
     values =  value
       |> Map.keys()
       |> Enum.map(fn(key) ->
-        # IO.inspect key
-        # IO.inspect value[key]
-        # IO.inspect encode(key)
-        # IO.inspect encode(value[key])
         concat(encode(key), encode(value[key]))
       end)
       |> Enum.reduce(<<>>, &concat/2)
 
-    # IO.inspect length
-    # IO.inspect values
     concat(length, values)
   end
 
