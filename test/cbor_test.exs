@@ -7,6 +7,7 @@ defmodule CborTest do
     round_trip(42)
     round_trip(:test)
     round_trip([1,2,3])
+    round_trip(%{key1: :value1, key2: :value2})
   end
 
   def round_trip(value) do
