@@ -65,6 +65,14 @@ defmodule Cbor.Decoder do
 
   def read_unsigned_integer(value) do
     case value do
+      << 26::size(5), value::size(32), rest::bits >> ->
+        {value, rest}
+      << 27::size(5), value::size(64), rest::bits >> ->
+        {value, rest}
+      << 26::size(5), value::size(32), rest::bits >> ->
+        {value, rest}
+      << 25::size(5), value::size(16), rest::bits >> ->
+        {value, rest}
       << 24::size(5), value::size(8), rest::bits >> ->
         {value, rest}
       << <<value::size(5)>>::bitstring, rest::bits >> ->

@@ -57,6 +57,12 @@ defmodule Cbor.Encoder do
         <<value::5>>
       value when value in 25..0x100 ->
         <<24::size(5), value>>
+      value when value in 0x101..0x10000 ->
+        <<25::size(5), value::size(16)>>
+      value when value in 0x10001..0x100000000 ->
+        <<26::size(5), value::size(32)>>
+      value when value in 0x100000001..0x10000000000000000 ->
+        <<27::size(5), value::size(64)>>
     end
   end
 end
