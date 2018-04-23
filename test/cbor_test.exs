@@ -5,9 +5,22 @@ defmodule CborTest do
   test "unsigned integers" do
     round_trip(1)
     round_trip(42)
+  end
+
+  test "strings (symbols)" do
     round_trip(:test)
-    round_trip([1,2,3])
+  end
+
+  test "arrays" do
+    round_trip([])
+    round_trip([3,2,1])
+  end
+
+  test "bytes" do
     round_trip(<<1,2,3>>)
+  end
+
+  test "maps" do
     round_trip(%{key1: :value1, key2: :value2})
   end
 

@@ -50,12 +50,19 @@ defmodule Cbor.Decoder do
 
   def read_array(value) do
     {length, rest} = read_unsigned_integer(value)
-    {values, rest} = Enum.reduce(1..length, {[], rest}, fn(_, acc) ->
-      {value, rest} = read(elem(acc, 1))
-      {[value | elem(acc, 0)], rest}
-    end)
-    {values|>Enum.reverse, rest}
+
+    if length == 0 do
+      {[], rest}
+    else
+     {values, rest} = Enum.reduce(1..length, {[], rest}, fn(_, {acc, rest}) ->
+        {value, rest} = read(rest)
+        {[value | acc], rest}
+      end)
+      {values |> Enum.reverse, rest}
+    end
   end
+
+
 
   def read_string(value) do
     {length, rest} = read_unsigned_integer(value)
