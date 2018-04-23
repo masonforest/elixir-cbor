@@ -9,9 +9,9 @@ defmodule Cbor.Decoder do
     {value, rest} = read(value)
 
     if rest == <<>> do
-      value
+      {:ok, value}
     else
-      raise "invalid trailing data"
+      {:error, :invalid_trailing_data}
     end
   end
 

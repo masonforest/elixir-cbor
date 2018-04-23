@@ -24,7 +24,11 @@ defmodule CborTest do
     round_trip(%{key1: :value1, key2: :value2})
   end
 
+  test "invalid data" do
+    assert {:error, :invalid_trailing_data} == Cbor.decode(<<1,2,3>>)
+  end
+
   def round_trip(value) do
-    assert value == Cbor.decode(Cbor.encode(value))
+    assert value == Cbor.decode!(Cbor.encode(value))
   end
 end
