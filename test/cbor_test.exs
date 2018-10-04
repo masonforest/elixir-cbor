@@ -4,6 +4,7 @@ defmodule CborTest do
 
   test "unsigned integers" do
     round_trip(1)
+    round_trip(24)
     round_trip(42)
   end
 
@@ -14,6 +15,7 @@ defmodule CborTest do
   test "arrays" do
     round_trip([])
     round_trip([3,2,1])
+    round_trip([100])
   end
 
   test "bytes" do

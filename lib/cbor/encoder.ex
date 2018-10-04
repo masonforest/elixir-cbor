@@ -53,9 +53,9 @@ defmodule Cbor.Encoder do
 
   def encode_unsigned_int(value) do
     case value do
-      value when value in 0..24 ->
+      value when value in 0..23 ->
         <<value::5>>
-      value when value in 25..0x100 ->
+      value when value in 24..0x100 ->
         <<24::size(5), value>>
       value when value in 0x101..0x10000 ->
         <<25::size(5), value::size(16)>>
