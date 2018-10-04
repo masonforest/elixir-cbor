@@ -11,7 +11,7 @@ defmodule Cbor.MixProject do
         licenses: ["MIT"],
         links: %{"GitHub" => "https://github.com/masonforest/elixir-cbor"},
       ],
-      elixir: "~> 1.6",
+      elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
