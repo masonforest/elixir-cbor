@@ -3,6 +3,8 @@ defmodule Cbor.Encoder do
 
   def encode(value) do
       case value do
+        value when is_nil(value) or is_boolean(value) or value == :undefined ->
+          concat(Types.primative, encode_primative(value))
         value when is_integer(value) ->
           concat(Types.unsigned_integer, encode_unsigned_int(value))
         value when is_atom(value) ->
@@ -63,6 +65,15 @@ defmodule Cbor.Encoder do
         <<26::size(5), value::size(32)>>
       value when value in 0x100000001..0x10000000000000000 ->
         <<27::size(5), value::size(64)>>
+    end
+  end
+
+  def encode_primative(value) do
+    case value do
+      false -> <<20::size(5)>>
+      true -> <<21::size(5)>>
+      nil -> <<22::size(5)>>
+      :undefined -> <<23::size(5)>>
     end
   end
 end

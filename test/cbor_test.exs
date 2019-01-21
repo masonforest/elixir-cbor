@@ -26,6 +26,13 @@ defmodule CborTest do
     round_trip(%{key1: :value1, key2: :value2})
   end
 
+  test "primatives" do
+    round_trip(nil)
+    round_trip(true)
+    round_trip(false)
+    round_trip(:undefined)
+  end
+
   test "invalid data" do
     assert {:error, :invalid_trailing_data} == Cbor.decode(<<1,2,3>>)
   end
