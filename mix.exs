@@ -4,7 +4,7 @@ defmodule Cbor.MixProject do
   def project do
     [
       app: :cbor,
-      version: "0.1.5",
+      version: "0.1.6",
       description: "RFC 7049 Concise Binary Object Representation (CBOR) ",
       package: [
         maintainers: ["Mason Fischer"],
