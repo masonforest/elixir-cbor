@@ -1,5 +1,6 @@
 defmodule Cbor.Encoder do
   alias Cbor.Types
+  alias Cbor.Sorting
 
   def encode(value) do
       case value do
@@ -39,6 +40,7 @@ defmodule Cbor.Encoder do
     length = encode_unsigned_int(map_size(value))
     values =  value
       |> Map.keys()
+      |> Enum.sort(&Sorting.compare/2)
       |> Enum.map(fn(key) ->
         concat(encode(key), encode(value[key]))
       end)
