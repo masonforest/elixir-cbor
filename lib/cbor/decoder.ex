@@ -36,13 +36,17 @@ defmodule Cbor.Decoder do
 
   def read_map(value) do
     {size, rest} = read_unsigned_integer(value)
-    {map, rest} = Enum.reduce(1..size, {%{}, rest}, fn(_, acc) ->
-      {key, rest} = read(elem(acc, 1))
-      {value, rest} = read(rest)
-      {Map.put(elem(acc, 0), key, value), rest}
-    end)
 
-    {map, rest}
+    if size == 0 do
+      {%{}, rest}
+    else
+      {map, rest} = Enum.reduce(1..size, {%{}, rest}, fn(_, acc) ->
+        {key, rest} = read(elem(acc, 1))
+        {value, rest} = read(rest)
+        {Map.put(elem(acc, 0), key, value), rest}
+      end)
+      {map, rest}
+    end
   end
 
   def read_byte_string(value) do

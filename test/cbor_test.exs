@@ -23,6 +23,7 @@ defmodule CborTest do
   end
 
   test "maps" do
+    round_trip(%{})
     round_trip(%{key1: :value1, key2: :value2})
   end
 
